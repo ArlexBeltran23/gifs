@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('gifs') // ID de las credenciales en Jenkins
-        DOCKER_IMAGE = "arlexbeltran/gifs" // Reemplaza 'miusuario' con tu nombre de usuario de Docker Hub
+        DOCKER_IMAGE = "arlexbeltran/gifs" 
     }
 
     stages {
@@ -31,13 +30,14 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
+                    docker.withRegistry('https://index.docker.io/v1/', '') {
                         docker.image("${env.DOCKER_IMAGE}:latest").push()
                     }
                 }
             }
         }
     }
+
     post {
         always {
             cleanWs()
