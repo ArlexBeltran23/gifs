@@ -1,52 +1,20 @@
-pipeline {
+pipeline{
     agent any
 
-    environment {
-        DOCKER_IMAGE = "arlexbeltran/gifs" 
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build Angular App') {
-            steps {
-                sh 'npm install'
-                sh 'npm run build -- --configuration production'
-            }
-        }
-
-        stage('Build Docker Image') {
+    stagets{
+        stage('docker build'){
             steps {
                 script {
-                    docker.build("${env.DOCKER_IMAGE}:latest")
+                    sh "docker build -f gifs/dockerfile -t arlexbeltran/gifs:1.0.0-${BUILD_ID} gifs"
                 }
             }
         }
-
-        stage('Push Docker Image') {
+        stage('docker push'){
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', '') {
-                        docker.image("${env.DOCKER_IMAGE}:latest").push()
-                    }
+                    sh "docker push arlexbeltran/gifs:1.0.0-${BUILD_ID}"
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            cleanWs()
-        }
-        success {
-            echo 'La construcción y el despliegue fueron exitosos.'
-        }
-        failure {
-            echo 'La construcción o el despliegue fallaron.'
         }
     }
 }
