@@ -4,7 +4,7 @@ pipeline {
     environment {
         registry = "arlexbeltran/authApp"
         dockerImage = 'pipe_angular'
-        CHROME_BIN = '/usr/bin/google-chrome'
+        CHROME_BIN = '/usr/bin/google-chrome-stable'
     }
 
     stages {
