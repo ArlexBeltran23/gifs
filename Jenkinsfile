@@ -15,7 +15,6 @@ pipeline {
         }
         stage('Setup') {
             steps {
-                sh 'apt-get update && sudo apt-get install -y libgbm1' 
                 sh 'npm install'
                 sh 'npm run test'
             }
@@ -39,7 +38,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build(registry, "-f Dockerfile .")
+                    dockerImage = docker.build(registry, "-f dockerfile .")
                 }
             }
         }
