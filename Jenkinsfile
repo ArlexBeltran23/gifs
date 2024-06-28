@@ -20,14 +20,6 @@ pipeline {
                 sh 'npm run test'
             }
         }
-         stage('Run tests') {
-            steps {
-                script {
-                    // Ejecutar pruebas con Xvfb
-                    sh 'xvfb-run -a npm run test'
-                }
-            }
-        }
         // stage('PR Validation') {
         //     when {
         //         expression { return env.CHANGE_ID != null }
