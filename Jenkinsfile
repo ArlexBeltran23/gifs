@@ -4,8 +4,6 @@ pipeline {
     environment {
         registry = "arlexbeltran/authApp"
         dockerImage = 'pipe_angular'
-         LD_LIBRARY_PATH = "/snap/ubuntu-desktop-installer/1286/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
-        CHROME_BIN = '/usr/bin/google-chrome-stable'
     }
 
     stages {
