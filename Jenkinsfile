@@ -13,33 +13,22 @@ pipeline {
                 checkout scm
             }
         }
-        // stage('Clean Up') {
-        //     steps {
-        //         cleanWs()
-        //         sh 'npm run clean'
-        //     }
-        // }
         stage('Setup') {
             steps {
+                sh 'sudo apt-get update && sudo apt-get install -y libgbm1' 
                 sh 'npm install'
                 sh 'npm run test'
             }
         }
-        stage('PR Validation') {
-            when {
-                changeset "origin/master"
-            }
-            steps {
-                script {
-                    def prN = env.CHANGE_ID
-                    echo "Validado pr #${prN}..."
-                }
-            }
-        }
-
-        // stage('Run ESLint') {
+        // stage('PR Validation') {
+        //     when {
+        //         expression { return env.CHANGE_ID != null }
+        //     }
         //     steps {
-        //         sh 'npm run lint'
+        //         script {
+        //             def prN = env.CHANGE_ID
+        //             echo "Validado PR #${prN}..."
+        //         }
         //     }
         // }
         stage('Build Angular App') {
@@ -50,7 +39,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build(registry, "-f Dockerfile .")
+                    dockerImage = docker.build(registry, "-f Dockerfile .")
                 }
             }
         }
