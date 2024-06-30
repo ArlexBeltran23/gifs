@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registry = "arlexbeltran/authApp"
+        registry = "arlexbeltran/gifs"
         dockerImage = 'pipe_angular'
     }
 
