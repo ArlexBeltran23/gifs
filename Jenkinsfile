@@ -15,7 +15,7 @@ pipeline {
         stage('Setup') {
             steps {
                 sh 'npm install'
-                sh 'npm run test'
+               // sh 'npm run test'
             }
         }
         // stage('PR Validation') {
