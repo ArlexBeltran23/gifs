@@ -44,7 +44,7 @@ pipeline {
         stage('Publish to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'AngularHub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
                         dockerImage.push("${env.BUILD_NUMBER}")
                         dockerImage.push("latest")
                     }
