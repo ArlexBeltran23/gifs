@@ -20,7 +20,7 @@ pipeline {
         }
           stage('Test') {
             steps {
-                sh 'npm run test -- --watch=false --code-coverage'
+                sh 'npm run test -- --watch=false --code-coverage --browsers=ChromeHeadless'
             }
         }
         stage('PR Validation') {
