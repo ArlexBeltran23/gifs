@@ -18,17 +18,17 @@ pipeline {
                // sh 'npm run test'
             }
         }
-        // stage('PR Validation') {
-        //     when {
-        //         expression { return env.CHANGE_ID != null }
-        //     }
-        //     steps {
-        //         script {
-        //             def prN = env.CHANGE_ID
-        //             echo "Validado PR #${prN}..."
-        //         }
-        //     }
-        // }
+        stage('PR Validation') {
+            when {
+                expression { return env.CHANGE_ID != null }
+            }
+            steps {
+                script {
+                    def prN = env.CHANGE_ID
+                    echo "Validado PR #${prN}..."
+                }
+            }
+        }
         stage('Build Angular App') {
             steps {
                 sh 'npm run build --prod'
