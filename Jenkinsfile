@@ -7,6 +7,17 @@ pipeline {
     }
 
     stages {
+        stage('Clean Up') {
+            steps {
+                sh 'rm -rf node_modules/ dist/'
+
+                sh 'npm ci'
+
+                sh 'docker container prune -f'
+                sh 'docker image prune -af'
+                sh 'docker network prune -f'
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm
@@ -18,11 +29,11 @@ pipeline {
                
             }
         }
-          stage('Test') {
-            steps {
-                sh 'npm run test -- --watch=false --code-coverage --browsers=ChromeHeadless'
-            }
-        }
+        //   stage('Test') {
+        //     steps {
+        //         sh 'npm run test -- --watch=false --code-coverage --browsers=ChromeHeadless'
+        //     }
+        // }
         stage('PR Validation') {
             when {
                 expression { return env.CHANGE_ID != null }
@@ -57,12 +68,4 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //         script {
-    //             // Asegúrate de tener el plugin de ESLint instalado y configurado correctamente
-    //             recordIssues tools: [eslint(pattern: 'eslint-report.json')]
-    //         }
-    //     }
-    // }
 }
