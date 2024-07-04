@@ -15,7 +15,12 @@ pipeline {
         stage('Setup') {
             steps {
                 sh 'npm install'
-               // sh 'npm run test'
+               
+            }
+        }
+          stage('Test') {
+            steps {
+                sh 'npm run test -- --watch=false --code-coverage'
             }
         }
         stage('PR Validation') {
