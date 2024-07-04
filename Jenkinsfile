@@ -10,9 +10,8 @@ pipeline {
         stage('Clean Up') {
             steps {
                 sh 'rm -rf node_modules/ dist/'
-
+                sh 'npm cache clean --force' 
                 sh 'npm ci'
-
                 sh 'docker container prune -f'
                 sh 'docker image prune -af'
                 sh 'docker network prune -f'
